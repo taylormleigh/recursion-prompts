@@ -22,7 +22,7 @@ var sum = function(array) {
   if (!array.length) {
    return 0;
   } else {
-    var nArray = array.slice(0, array.length)
+    var nArray = array.slice(0, array.length);
     var last = nArray[nArray.length -1];
     nArray.pop();
     return last + sum(nArray);
@@ -31,7 +31,7 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
-    var flat = array.flat(Infinity)
+    var flat = array.flat(Infinity);
 
     if (!flat.length) {
         return 0;
@@ -77,13 +77,11 @@ var range = function(x, y) {
     if (x === y) {
         return array;
     } else if (x > y) {
-       array.push(x-1);
-       return range(x-1, y);
+       array.push(range(x-1, y));
     } else if (x < y) {
-        array.push(x+1);
-        return range(x+1, y);
+       array.push(range(x+1, y));
     }
-    return array;
+    return array.flat(Infinity);
 };
 
 // 7. Compute the exponent of a number.
@@ -92,6 +90,17 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+    if (exp === 1) {
+        return base;
+    } else if (exp === -1) {
+        return base;
+    } else if (exp === 0) {
+        return 1;
+    } else if (base > 0 && exp > 0) {
+        return base * exponent(base, exp - 1);
+    } else if (base > 0 && exp < 0) {
+        return 1 / (base * exponent(base, exp + 1));
+    }
 };
 
 // 8. Determine if a number is a power of two.
@@ -99,10 +108,22 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+    if (n === 0) {
+        return false;
+    } else if (n === 1) {
+        return true;
+    } else {
+        return powerOfTwo(n/2);
+    }
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+    if (string.length === 1) {
+        return string;
+    } else {
+        return reverse(string.substring(0, string.length-1));
+    }
 };
 
 // 10. Write a function that determines if a string is a palindrome.
