@@ -74,14 +74,15 @@ var sumBelow = function(n) {
 var range = function(x, y) {
     var array = [];
 
-    if (x === y) {
+    if (x === y || x - 1 === y || x + 1 === y) {
         return array;
     } else if (x > y) {
-       array.push(range(x-1, y));
+       array.push(x-1);
+       return array.concat(range(x-1, y));
     } else if (x < y) {
-       array.push(range(x+1, y));
+       array.push(x+1);
+       return array.concat(range(x+1, y));
     }
-    return array.flat(Infinity);
 };
 
 // 7. Compute the exponent of a number.
