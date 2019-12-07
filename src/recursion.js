@@ -100,7 +100,7 @@ var exponent = function(base, exp) {
     } else if (base > 0 && exp > 0) {
         return base * exponent(base, exp - 1);
     } else if (base > 0 && exp < 0) {
-        return 1 / (base * exponent(base, exp + 1));
+        return 1 / (base * exponent(base, -exp - 1 ));
     }
 };
 
@@ -149,19 +149,53 @@ var modulo = function(x, y) {
     } else if (x === y) {
         return 0;
     } else {
-        return modulo(Math.floor(x/y), x);
+        return modulo((x/y), x);
     }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+    if (y === 0 || x === 0) {
+        return 0;
+    } else if (y === 1) {
+        return x;
+    } else if (x === 1) {
+        return y;
+        
+    } else if (x < 0 && y > 0) {
+        return -(x + multiply(x, -y - 1));
+    } else if (y < 0 && x > 0) {
+        return -(y + multiply(-x - 1, y));
+
+    } else if (y < 0 && x < 0) {
+        return -x + multiply(x, y + 1);
+    } else {
+        return x + multiply(x, y - 1);
+    }
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
+    if (x === 0 || y === 0) {
+        return 0;
+    } else if (y === 1) {
+        return x;
+
+    } else if (x > y && (x > 0 && y > 0)) {
+        return divide(x - y, y);
+    } else if (y >= x && (x > 0 && y > 0)) {
+        return y - x;
+
+    } else if (x > y && (x < 0 && y < 0)) {
+        return ~~(divide(-x + -y, y)); 
+    } else if (y > x && (x > 0 && y < 0)){
+        return y + x;
+    }
+    
 };
+
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
 // integers is the greatest integer that divides both x and y with no remainder.
